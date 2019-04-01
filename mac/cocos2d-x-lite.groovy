@@ -4,7 +4,7 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_LITE_PUBLISH', defaultValue: true, description:'是否重新构建上传-lite仓库模拟器'),
 ])])
 
-node('windows') {
+node('mac') {
     stage ('checkout code'){
         git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:wuzhiming/cocos2d-x-lite.git'
     }

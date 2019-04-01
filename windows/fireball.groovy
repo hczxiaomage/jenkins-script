@@ -12,14 +12,14 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
 ])])
 
-node('mac') {
+node('windows') {
     stage ('checkout code'){
-        git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:wuzhiming/fireball.git'
+            git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:wuzhiming/fireball.git'
     }
 
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
-            sh 'npm install'
+            bat 'npm install'
         } else {
             echo 'skip setup-environment stage'
         }
@@ -27,9 +27,9 @@ node('mac') {
 
     stage ('update fireball') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_FIREBALL)) {
-            // sh 'git fetch origin'
-            // sh 'git checkout '+ env.FIREBALL_BUILD_BRANCH
-            sh 'gulp update-fireball'
+            // bat 'git fetch origin'
+            // bat 'git checkout '+ env.FIREBALL_BUILD_BRANCH
+            bat 'gulp update-fireball'
         } else {
             echo 'skip update-fireball stage'
         }
@@ -37,7 +37,7 @@ node('mac') {
 
     stage ('update builtin') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_BUILTIN)) {
-            sh 'gulp update-builtin'
+            bat 'gulp update-builtin'
         } else {
             echo 'skip update-builtin stage'
         }
@@ -45,7 +45,7 @@ node('mac') {
 
     stage ('checkout setting branch') {
         if (Boolean.parseBoolean(env.FIREBALL_CHECKOUT_SETTING_BRANCH)) {
-            sh 'gulp checkout-setting-branch'
+            bat 'gulp checkout-setting-branch'
         } else {
             echo 'skip checkout-setting-branch stage'
         }
@@ -53,7 +53,7 @@ node('mac') {
 
     stage ('update') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE)) {
-            sh 'gulp update'
+            bat 'gulp update'
         } else {
             echo 'skip update stage'
         }
@@ -61,7 +61,7 @@ node('mac') {
 
     stage ('clean cache') {
         if (Boolean.parseBoolean(env.FIREBALL_CLEAN_CACHE)) {
-            sh 'gulp clean-cache'
+            bat 'gulp clean-cache'
         } else {
             echo 'skip clean-cache stage'
         }
@@ -69,7 +69,7 @@ node('mac') {
 
     stage ('sync engine version') {
         if (Boolean.parseBoolean(env.FIREBALL_SYNC_ENGINE_VERSION)) {
-            sh 'gulp sync-engine-version'
+            bat 'gulp sync-engine-version'
         } else {
             echo 'skip sync-engine-version stage'
         }
@@ -77,7 +77,7 @@ node('mac') {
 
     stage ('update externs') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_EXTERNS)) {
-            sh 'gulp update-externs'
+            bat 'gulp update-externs'
         } else {
             echo 'skip update-externs stage'
         }
@@ -85,26 +85,25 @@ node('mac') {
 
     stage ('update templates') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_TEMPLATES)) {
-            sh 'gulp update-templates'
+            bat 'gulp update-templates'
         } else {
             echo 'skip update-templates stage'
         }
     }
     stage ('push tag') {
         if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG)) {
-            sh 'gulp push-tag'
+            bat 'gulp push-tag'
         } else {
             echo 'skip push-tag stage'
         }
     }
 
     stage ('make dist') {
-        sh 'npm install cocos-creator/creator-asar'
-        sh 'npm install appdmg -g'
-        sh 'gulp make-dist'
+        bat 'npm install cocos-creator/creator-asar rcedit'
+        bat 'gulp make-dist'
     }
 
     stage ('update templates') {
-        sh 'gulp deploy'
+        bat 'gulp deploy'
     }
 }

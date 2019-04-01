@@ -11,9 +11,9 @@ node('mac') {
 
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
-            sh 'python download-deps.py -r no'
-            sh 'git submodule update --init'
-            sh 'npm install'
+            bat 'python download-deps.py -r no'
+            bat 'git submodule update --init'
+            bat 'npm install'
         } else {
             echo 'skip setup-environment stage'
         }
@@ -21,7 +21,7 @@ node('mac') {
 
     stage ('cocos2d-x-lite publish') {
             if (Boolean.parseBoolean(env.FIREBALL_LITE_PUBLISH)) {
-                sh 'gulp publish'
+                bat 'gulp publish'
             } else {
                 echo 'skip cocos2d-x-lite publish stage'
             }

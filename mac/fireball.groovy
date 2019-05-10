@@ -20,6 +20,7 @@ node('mac') {
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
             sh 'npm install'
+            sh 'gulp update-hosts'
         } else {
             echo 'skip setup-environment stage'
         }

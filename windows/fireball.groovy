@@ -20,7 +20,7 @@ node('windows') {
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
             bat 'npm install'
-            bat 'gulp update hosts'
+            bat 'gulp update-hosts'
         } else {
             echo 'skip setup-environment stage'
         }

@@ -14,7 +14,7 @@ properties([parameters([
 
 node('windows') {
     stage ('checkout code'){
-            git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:wuzhiming/fireball.git'
+            git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'
     }
 
     stage ('setup environment') {

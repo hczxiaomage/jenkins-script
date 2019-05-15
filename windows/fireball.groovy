@@ -1,5 +1,5 @@
 properties([parameters([
-  string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.0-release', description: '构建的分支(对应GitHub上的branch)'),
+  string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.0.10-release', description: '构建的分支(对应GitHub上的branch)'),
   booleanParam(name: 'FIREBALL_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
   booleanParam(name: 'FIREBALL_UPDATE_FIREBALL', defaultValue: true, description: 'update fireball'),
   booleanParam(name: 'FIREBALL_UPDATE_BUILTIN', defaultValue: true, description: '是否更新built-in'),
@@ -20,6 +20,7 @@ node('windows') {
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
             bat 'npm install'
+            bat 'npm install cocos-creator/creator-asar rcedit'
             bat 'npm run bootstrap'
         } else {
             echo 'skip setup-environment stage'
@@ -100,7 +101,6 @@ node('windows') {
     }
 
     stage ('make dist') {
-        bat 'npm install cocos-creator/creator-asar rcedit'
         bat 'gulp make-dist'
     }
 

@@ -20,9 +20,9 @@ node('mac') {
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
             sh 'npm install'
-            sh 'npm run bootstrap'
             sh 'npm install cocos-creator/creator-asar'
             sh 'npm install appdmg -g'
+            sh 'npm run bootstrap'
         } else {
             echo 'skip setup-environment stage'
         }

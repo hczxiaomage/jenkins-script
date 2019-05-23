@@ -5,7 +5,7 @@ properties([parameters([
   booleanParam(name: 'EDITOR_REBUILD', defaultValue: true, description: '是否重新构建所有task'),
 ])])
 
-node('mac') {
+node('windows') {
     stage ('checkout code'){
         git branch: "${EDITOR_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/editor-3d.git'
     }

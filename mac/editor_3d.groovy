@@ -35,7 +35,7 @@ node('mac') {
         }
     }
 
-    stage ('update templates') {
+    stage ('publish editor') {
         sh 'npm run publish'
     }
 }

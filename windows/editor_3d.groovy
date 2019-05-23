@@ -35,7 +35,7 @@ node('windows') {
         }
     }
 
-    stage ('update templates') {
+    stage ('publish editor') {
         bat 'npm run publish'
     }
 }

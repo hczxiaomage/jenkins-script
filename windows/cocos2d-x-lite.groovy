@@ -6,7 +6,7 @@ properties([parameters([
 
 node('windows') {
     stage ('checkout code'){
-        git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:wuzhiming/cocos2d-x-lite.git'
+        git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/cocos2d-x-lite.git'
     }
 
     stage ('setup environment') {
@@ -20,10 +20,10 @@ node('windows') {
     }
 
     stage ('cocos2d-x-lite publish') {
-            if (Boolean.parseBoolean(env.FIREBALL_LITE_PUBLISH)) {
-                bat 'gulp publish'
-            } else {
-                echo 'skip cocos2d-x-lite publish stage'
-            }
+        if (Boolean.parseBoolean(env.FIREBALL_LITE_PUBLISH)) {
+            bat 'gulp publish'
+        } else {
+            echo 'skip cocos2d-x-lite publish stage'
         }
+    }
 }

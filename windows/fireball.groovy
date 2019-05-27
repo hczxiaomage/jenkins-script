@@ -14,7 +14,7 @@ properties([parameters([
 
 node('windows') {
     stage ('checkout code'){
-            git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:wuzhiming/fireball.git'
+        git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'
     }
 
     stage ('setup environment') {
@@ -35,11 +35,11 @@ node('windows') {
         }
     }
 
-    stage ('update builtin') {
+    stage ('clone builtin') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_BUILTIN)) {
-            bat 'gulp update-builtin'
+            bat 'gulp clone-builtin'
         } else {
-            echo 'skip update-builtin stage'
+            echo 'skip clone-builtin stage'
         }
     }
 
@@ -51,20 +51,52 @@ node('windows') {
         }
     }
 
-    stage ('update') {
-        if (Boolean.parseBoolean(env.FIREBALL_UPDATE)) {
-            bat 'gulp update'
+    stage ('update hosts') {
+        if (Boolean.parseBoolean(env.FIREBALL_UPDATE_HOSTS)) {
+            bat 'gulp update-hosts'
         } else {
-            echo 'skip update stage'
+            echo 'skip update-hosts stage'
+        }
+    }
+
+    stage ('update builtin') {
+        if (Boolean.parseBoolean(env.FIREBALL_UPDATE_BUILTIN)) {
+            bat 'gulp clone-update-builtin'
+        } else {
+            echo 'skip update builtin stage'
+        }
+    }
+
+    stage ('update electron') {
+        if (Boolean.parseBoolean(env.FIREBALL_UPDATE_REMAIN)) {
+            bat 'gulp update-electron'
+        } else {
+            echo 'skip update-electron stage'
+        }
+    }
+
+    stage ('clean engine dev') {
+        bat 'gulp clean-engine-dev'
+    }
+    
+    stage ('build engine') {
+        if (Boolean.parseBoolean(env.FIREBALL_UPDATE_REMAIN)) {
+            bat 'gulp build-engine'
+        } else {
+            echo 'skip build-engine stage'
+        }
+    }
+    
+    stage ('make tsd') {
+        if (Boolean.parseBoolean(env.FIREBALL_UPDATE_REMAIN)) {
+            bat 'gulp make-tsd'
+        } else {
+            echo 'skip make-tsd stage'
         }
     }
 
     stage ('clean cache') {
-        if (Boolean.parseBoolean(env.FIREBALL_CLEAN_CACHE)) {
-            bat 'gulp clean-cache'
-        } else {
-            echo 'skip clean-cache stage'
-        }
+        bat 'gulp clean-cache'
     }
 
     stage ('sync engine version') {
@@ -90,6 +122,7 @@ node('windows') {
             echo 'skip update-templates stage'
         }
     }
+
     stage ('push tag') {
         if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG)) {
             bat 'gulp push-tag'

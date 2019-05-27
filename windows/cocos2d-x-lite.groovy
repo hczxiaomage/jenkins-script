@@ -9,16 +9,6 @@ node('windows') {
         git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/cocos2d-x-lite.git'
     }
 
-    stage ('setup environment') {
-        if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
-            bat 'python download-deps.py -r no'
-            bat 'git submodule update --init'
-            bat 'npm install'
-        } else {
-            echo 'skip setup-environment stage'
-        }
-    }
-
     stage ('cocos2d-x-lite publish') {
         if (Boolean.parseBoolean(env.FIREBALL_LITE_PUBLISH)) {
             bat 'gulp publish'

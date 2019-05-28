@@ -1,5 +1,8 @@
 properties([parameters([
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.0.10-release', description: '构建的分支(对应GitHub上的branch)'),
+  string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.0.10', description: '用户实际看到的版本号'),
+  booleanParam(name: 'FIREBALL_HIDE_VERSION_CODE', defaultValue: false, description: '是否隐藏版本号'),
+  booleanParam(name: 'FIREBALL_UPLOAD_WAN', defaultValue: false, description: '是否上传到外网'),
   booleanParam(name: 'FIREBALL_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
   booleanParam(name: 'FIREBALL_UPDATE_FIREBALL', defaultValue: true, description: 'update fireball'),
   booleanParam(name: 'FIREBALL_UPDATE_BUILTIN', defaultValue: true, description: '是否更新built-in'),
@@ -13,7 +16,26 @@ properties([parameters([
 ])])
 
 node('mac') {
-    stage ('checkout code'){
+    String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
+    paramStr += ' ' +env.FIREBALL_PUBLISH_VERSION;
+
+    if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
+        paramStr += ' --fw'
+    }
+
+    echo 'test publish version' + paramStr;
+
+    def execGulp(taskName) {
+        String command = 'gulp ' + taskName + ' ' + paramStr;
+
+        if (isUnix()) {
+            sh command;
+        } else {
+            bat command;
+        }
+    }
+
+    stage ('checkout code') {
         git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'
     }
 
@@ -32,7 +54,7 @@ node('mac') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_FIREBALL)) {
             // sh 'git fetch origin'
             // sh 'git checkout '+ env.FIREBALL_BUILD_BRANCH
-            sh 'gulp update-fireball'
+            execGulp('update-fireball');
         } else {
             echo 'skip update-fireball stage'
         }
@@ -40,7 +62,7 @@ node('mac') {
 
     stage ('update builtin') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_BUILTIN)) {
-            sh 'gulp update-builtin'
+             execGulp('update-builtin');
         } else {
             echo 'skip update-builtin stage'
         }
@@ -48,7 +70,7 @@ node('mac') {
 
     stage ('checkout setting branch') {
         if (Boolean.parseBoolean(env.FIREBALL_CHECKOUT_SETTING_BRANCH)) {
-            sh 'gulp checkout-setting-branch'
+            execGulp('checkout-setting-branch');
         } else {
             echo 'skip checkout-setting-branch stage'
         }
@@ -56,7 +78,7 @@ node('mac') {
 
     stage ('update') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE)) {
-            sh 'gulp update'
+            execGulp('gulp update');
         } else {
             echo 'skip update stage'
         }
@@ -64,7 +86,7 @@ node('mac') {
 
     stage ('clean cache') {
         if (Boolean.parseBoolean(env.FIREBALL_CLEAN_CACHE)) {
-            sh 'gulp clean-cache'
+            execGulp('gulp clean-cache');
         } else {
             echo 'skip clean-cache stage'
         }
@@ -72,7 +94,7 @@ node('mac') {
 
     stage ('sync engine version') {
         if (Boolean.parseBoolean(env.FIREBALL_SYNC_ENGINE_VERSION)) {
-            sh 'gulp sync-engine-version'
+            execGulp('gulp sync-engine-version');
         } else {
             echo 'skip sync-engine-version stage'
         }
@@ -80,7 +102,7 @@ node('mac') {
 
     stage ('update externs') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_EXTERNS)) {
-            sh 'gulp update-externs'
+            execGulp('gulp update-externs');
         } else {
             echo 'skip update-externs stage'
         }
@@ -88,24 +110,20 @@ node('mac') {
 
     stage ('update templates') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_TEMPLATES)) {
-            sh 'gulp update-templates'
+            execGulp('gulp update-templates');
         } else {
             echo 'skip update-templates stage'
         }
     }
     stage ('push tag') {
         if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG)) {
-            sh 'gulp push-tag'
+            execGulp('gulp push-tag');
         } else {
             echo 'skip push-tag stage'
         }
     }
 
     stage ('make dist') {
-        sh 'gulp make-dist'
-    }
-
-    stage ('update templates') {
-        sh 'gulp deploy'
+        execGulp('gulp make-dist-and-deploy');
     }
 }

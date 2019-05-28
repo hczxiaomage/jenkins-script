@@ -1,5 +1,8 @@
 properties([parameters([
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.0.10-release', description: '构建的分支(对应GitHub上的branch)'),
+  string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.0.10', description: '用户实际看到的版本号'),
+  booleanParam(name: 'FIREBALL_HIDE_VERSION_CODE', defaultValue: false, description: '是否隐藏版本号'),
+  booleanParam(name: 'FIREBALL_UPLOAD_WAN', defaultValue: false, description: '是否上传到外网'),
   booleanParam(name: 'FIREBALL_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
   booleanParam(name: 'FIREBALL_UPDATE_FIREBALL', defaultValue: true, description: 'update fireball'),
   booleanParam(name: 'FIREBALL_UPDATE_BUILTIN', defaultValue: true, description: '是否更新built-in'),
@@ -13,6 +16,16 @@ properties([parameters([
 ])])
 
 node('windows') {
+    String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? '-B':'-b';
+    paramStr+= ' ' +env.FIREBALL_PUBLISH_VERSION;
+
+    if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
+        paramStr += '--fw'
+    }
+
+    echo 'test publish version' + paramStr;
+
+    paramStr += Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)?''
     stage ('checkout code'){
             git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'
     }
@@ -101,10 +114,6 @@ node('windows') {
     }
 
     stage ('make dist') {
-        bat 'gulp make-dist'
-    }
-
-    stage ('update templates') {
-        bat 'gulp deploy'
+        bat 'gulp make-dist-and-deploy'
     }
 }

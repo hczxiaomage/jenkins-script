@@ -22,10 +22,12 @@ if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
     paramStr += ' --fw'
 }
 
+env.PARAM_STRING = paramStr;
+
 echo 'test publish version' + paramStr;
 
 def execGulp(taskName) {
-    String command = 'gulp ' + taskName + ' ' + paramStr;
+    String command = 'gulp ' + taskName + ' ' + env.PARAM_STRING;
 
     if (isUnix()) {
         sh command;

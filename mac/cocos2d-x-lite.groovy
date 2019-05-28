@@ -29,8 +29,11 @@ node('mac') {
     }
 
     stage ('cocos2d-x-lite publish') {
-        String version = env.COCOS2DX_BUILD_BRANCH.substring(1,COCOS2DX_BUILD_BRANCH.length());
         if (Boolean.parseBoolean(env.FIREBALL_LITE_PUBLISH_MAC)) {
+            String version = env.COCOS2DX_BUILD_BRANCH.substring(1, COCOS2DX_BUILD_BRANCH.length());
+            if (version.indexOf('-') != -1) {
+                version = version.substring(0, version.indexOf('-'));
+            }
             sh 'gulp publish -b ' + version
         } else {
             echo 'skip cocos2d-x-lite publish stage'

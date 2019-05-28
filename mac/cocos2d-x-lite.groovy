@@ -5,8 +5,6 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_LITE_PUBLISH_MAC', defaultValue: true, description:'是否重新构建上传-lite仓库模拟器'),
 ])])
 
-String version = COCOS2DX_BUILD_BRANCH.substring(1,COCOS2DX_BUILD_BRANCH.length());
-
 node('mac') {
     stage ('checkout code'){
         git branch: "${COCOS2DX_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/cocos2d-x-lite.git'
@@ -31,6 +29,9 @@ node('mac') {
     }
 
     stage ('cocos2d-x-lite publish') {
+        String version = COCOS2DX_BUILD_BRANCH.substring(1,COCOS2DX_BUILD_BRANCH.length());
+        echo 'test 1 is ${COCOS2DX_BUILD_BRANCH.substring(1,5)}'
+        echo 'test 2 is ${COCOS2DX_BUILD_BRANCH.length()}'
         if (Boolean.parseBoolean(env.FIREBALL_LITE_PUBLISH_MAC)) {
             sh 'gulp publish -b ${version}'
         } else {

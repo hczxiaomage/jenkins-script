@@ -16,7 +16,7 @@ properties([parameters([
 ])])
 
 String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
-paramStr += ' ' +env.FIREBALL_PUBLISH_VERSION;
+paramStr += env.FIREBALL_PUBLISH_VERSION;
 
 if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
     paramStr += ' --fw'

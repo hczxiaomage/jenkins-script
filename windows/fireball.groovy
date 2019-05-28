@@ -15,17 +15,28 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
 ])])
 
-node('windows') {
-    String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? '-B':'-b';
-    paramStr+= ' ' +env.FIREBALL_PUBLISH_VERSION;
+String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
+paramStr += env.FIREBALL_PUBLISH_VERSION;
 
-    if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
-        paramStr += '--fw'
+if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
+    paramStr += ' --fw'
+}
+
+env.PARAM_STRING = paramStr;
+
+echo 'test publish version' + paramStr;
+
+def execGulp(taskName) {
+    String command = 'gulp ' + taskName + ' ' + env.PARAM_STRING;
+
+    if (isUnix()) {
+        sh command;
+    } else {
+        bat command;
     }
+}
 
-    echo 'test publish version' + paramStr;
-
-    paramStr += Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)?''
+node('windows') {
     stage ('checkout code'){
             git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'
     }

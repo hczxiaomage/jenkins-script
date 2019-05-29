@@ -7,10 +7,7 @@ def test1Param = [
 properties([parameters(test1Param)])
 
 for(int i = 0;i<test1Param.size();i++){
-    echo '1 COCOS2DX_BUILD_BRANCH'+env.COCOS2DX_BUILD_BRANCH;
-    echo '1 FIREBALL_MAKE_COCOS2DX'+env.FIREBALL_MAKE_COCOS2DX;
-    echo '1 FIREBALL_MAKE_COCOS2DX'+env.FIREBALL_MAKE_COCOS2DX;
-    echo '1 FIREBALL_LITE_PUBLISH_MAC'+env.FIREBALL_LITE_PUBLISH_MAC;
+    echo 'item is ' + test1Param[i].name;
 }
 
 node('mac') {

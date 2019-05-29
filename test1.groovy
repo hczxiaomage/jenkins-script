@@ -7,7 +7,7 @@ def test1Param = [
 properties([parameters(test1Param)])
 
 for(int i = 0;i<test1Param.size();i++){
-    echo 'item is ' + test1Param[i].name;
+    echo 'item is ' + test1Param[i];
 }
 
 node('mac') {

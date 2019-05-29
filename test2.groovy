@@ -7,7 +7,7 @@ def test2Param = [
 properties([parameters(test2Param)])
 
 for(int i = 0;i<test2Param.size();i++){
-    echo 'item is ' + test2Param[i].name;
+    echo 'item is ' + test2Param[i];
 }
 
 node('mac') {

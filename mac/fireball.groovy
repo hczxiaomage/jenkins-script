@@ -24,11 +24,10 @@ if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
 
 env.PARAM_STRING = paramStr;
 
-echo 'test publish version' + paramStr;
-
 def execGulp(taskName) {
     String command = 'gulp ' + taskName + ' ' + env.PARAM_STRING;
 
+    echo 'exec command ' + command;
     if (isUnix()) {
         sh command;
     } else {
@@ -54,8 +53,6 @@ node('mac') {
 
     stage ('update fireball') {
         if (Boolean.parseBoolean(env.FIREBALL_UPDATE_FIREBALL)) {
-            // sh 'git fetch origin'
-            // sh 'git checkout '+ env.FIREBALL_BUILD_BRANCH
             execGulp('update-fireball');
         } else {
             echo 'skip update-fireball stage'

@@ -6,7 +6,7 @@ def test2Param = [
 ];
 properties([parameters(test2Param)])
 
-for(int i = 0;i<test2Param.size;i++){
+for(int i = 0;i<test2Param.size();i++){
     echo '2 COCOS2DX_BUILD_BRANCH'+env.COCOS2DX_BUILD_BRANCH;
     echo '2 FIREBALL_MAKE_COCOS2DX'+env.FIREBALL_MAKE_COCOS2DX;
     echo '2 FIREBALL_MAKE_COCOS2DX'+env.FIREBALL_MAKE_COCOS2DX;

@@ -5,7 +5,7 @@ properties([parameters([
 
 node('windows') {
     stage ('checkout code'){
-        git branch: "${EDITOR_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/editor-3d.git'
+        git branch: "${EDITOR_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/avg.git'
     }
 
     stage ('setup environment') {

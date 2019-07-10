@@ -1,6 +1,8 @@
 properties([parameters([
   string(name: 'EDITOR_BUILD_BRANCH', defaultValue: 'master', description: '构建的分支(对应GitHub上的branch)'),
   booleanParam(name: 'EDITOR_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
+  booleanParam(name: 'EDITOR_GREEN', defaultValue: false, description: '是否是构建绿色版本'),
+  booleanParam(name: 'EDITOR_INSTALLER', defaultValue: false, description: '是否是构建安装版本版本'),
 ])])
 
 node('windows') {

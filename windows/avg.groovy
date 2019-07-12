@@ -13,9 +13,9 @@ node('windows') {
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.EDITOR_SETUP_ENV)) {
             bat 'npm install'
+            bat 'npm install cocos-creator/creator-asar'
             dir('avg-electron') {
                 bat 'npm install'
-                bat 'npm install cocos-creator/creator-asar'
             }
         } else {
             echo 'skip setup-environment stage'
@@ -23,8 +23,6 @@ node('windows') {
     }
 
     stage ('publish editor') {
-        dir('avg-electron') {
-           bat 'gulp publish'
-        }
+       bat 'gulp publish'
     }
 }

@@ -11,9 +11,9 @@ node('mac') {
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.EDITOR_SETUP_ENV)) {
             sh 'npm install'
+            sh 'npm install cocos-creator/creator-asar'
             dir('avg-electron') {
                 sh 'npm install'
-                sh 'npm install cocos-creator/creator-asar'
             }
         } else {
             echo 'skip setup-environment stage'
@@ -21,8 +21,6 @@ node('mac') {
     }
 
     stage ('publish editor') {
-        dir('avg-electron') {
-            sh 'gulp publish'
-        }
+        sh 'gulp publish'
     }
 }

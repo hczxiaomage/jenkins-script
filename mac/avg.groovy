@@ -10,8 +10,9 @@ node('mac') {
 
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.EDITOR_SETUP_ENV)) {
+            sh 'npm install'
             dir('avg-electron') {
-                sh 'npm install --production'
+                sh 'npm install'
                 sh 'npm install cocos-creator/creator-asar'
             }
         } else {

@@ -12,8 +12,9 @@ node('windows') {
 
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.EDITOR_SETUP_ENV)) {
+            bat 'npm install'
             dir('avg-electron') {
-                bat 'npm install --production'
+                bat 'npm install'
                 bat 'npm install cocos-creator/creator-asar'
             }
         } else {

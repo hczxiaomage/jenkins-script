@@ -6,7 +6,7 @@ properties([parameters([
 
 node('mac') {
     stage ('checkout code'){
-        git branch: "${EDITOR_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/avg.git'
+        git branch: "${EDITOR_BUILD_BRANCH}", url: 'git@github.com:wuzhiming/avg.git'
     }
 
     stage ('setup environment') {

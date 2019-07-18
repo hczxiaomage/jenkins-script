@@ -1,6 +1,7 @@
 properties([parameters([
   string(name: 'EDITOR_BUILD_BRANCH', defaultValue: 'dev', description: '构建的分支(对应GitHub上的branch)'),
-  booleanParam(name: 'EDITOR_SETUP_ENV', defaultValue: false, description: '是否初始化环境')
+  booleanParam(name: 'EDITOR_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
+  booleanParam(name: 'EDITOR_UPLOAD_LAN', defaultValue: true, description: '是否上传到ftp'),
 ])])
 
 node('mac') {

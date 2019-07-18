@@ -3,6 +3,7 @@ properties([parameters([
   booleanParam(name: 'EDITOR_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
   booleanParam(name: 'EDITOR_GREEN', defaultValue: true, description: '是否是构建绿色版本'),
   booleanParam(name: 'EDITOR_INSTALLER', defaultValue: false, description: '是否是构建安装版本版本'),
+  booleanParam(name: 'EDITOR_UPLOAD_LAN', defaultValue: true, description: '是否上传到ftp'),
 ])])
 
 node('windows') {

@@ -24,6 +24,9 @@ node('windows') {
     }
 
     stage ('publish editor') {
+        dir('avg-electron') {
+            bat 'gulp build-css'
+        }
        bat 'gulp publish'
     }
 }

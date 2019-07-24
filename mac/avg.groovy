@@ -22,6 +22,9 @@ node('mac') {
     }
 
     stage ('publish editor') {
+        dir('avg-electron') {
+            sh 'gulp build-css'
+        }
         sh 'gulp publish'
     }
 }

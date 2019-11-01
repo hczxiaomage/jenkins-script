@@ -3,6 +3,7 @@ properties([parameters([
   string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.0', description: '用户实际看到的版本号'),
   booleanParam(name: 'FIREBALL_HIDE_VERSION_CODE', defaultValue: false, description: '是否隐藏版本号'),
   booleanParam(name: 'FIREBALL_UPLOAD_WAN', defaultValue: false, description: '是否上传到外网'),
+  booleanParam(name: 'FIREBALL_SKIP_NPM_REBUILD', defaultValue: false, description: '是否跳过 npm install 和 npm rebuild'),
   booleanParam(name: 'FIREBALL_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
   booleanParam(name: 'FIREBALL_UPDATE_FIREBALL', defaultValue: true, description: 'update fireball'),
   booleanParam(name: 'FIREBALL_UPDATE_BUILTIN', defaultValue: true, description: '是否更新built-in'),
@@ -20,6 +21,9 @@ paramStr += env.FIREBALL_PUBLISH_VERSION;
 
 if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
     paramStr += ' --fw'
+}
+if (Boolean.parseBoolean(env.FIREBALL_SKIP_NPM_REBUILD)) {
+    paramStr += ' --sn'
 }
 
 env.PARAM_STRING = paramStr;

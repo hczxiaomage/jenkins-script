@@ -26,6 +26,7 @@ node('windows') {
             dir('avg-electron') {
                 bat 'npm install'
             }
+            bat 'gulp npm-rebuild'
         }
     }
     

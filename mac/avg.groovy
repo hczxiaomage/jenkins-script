@@ -11,7 +11,7 @@ node('mac') {
     }
 
     stage ('setup debug environment') {
-        if (Boolean.parseBoolean(env.EDITOR_SETUP_ENV)) {
+        if (Boolean.parseBoolean(env.EDITOR_SETUP_DEBUG_ENV)) {
             sh 'npm install'
             sh 'npm install cocos-creator/creator-asar'
         } else {

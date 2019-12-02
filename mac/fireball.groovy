@@ -46,7 +46,7 @@ node('mac') {
 
     stage ('setup environment') {
         if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
-            sh 'npm install'
+            sh 'npm install --production'
             sh 'npm install cocos-creator/creator-asar'
             sh 'npm install rcedit@2.0.0 -g'
             sh 'npm run bootstrap'

@@ -18,7 +18,7 @@ properties([parameters([
 ])])
 
 def sendMail(sentTo,cc,title,body) {
-    emailext to:sentTo, body:body,subject:title,cc:cc 
+    emailext body:body,subject:title,to:sentTo
 }
 
 boolean isCancel = false
@@ -158,7 +158,7 @@ try {
         isCancel = true
     } finally {
         echo '构建失败发邮件'
-        sendMail('154179667@qq.com','zhiming.wu@chukong-inc.com','构建结果','构建${env.FIREBALL_BUILD_BRANCH} 失败')
+        sendMail('154179667@qq.com','zhiming.wu@chukong-inc.com','构建结果','构建失败')
         if (!isCancel) {
         }
     }

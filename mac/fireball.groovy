@@ -158,7 +158,7 @@ try {
         echo 'in interruptEx============'
         isCancel = true
     } finally {
-        sendMail('154179667@qq.com')
+        sendMail('154179667@qq.com','','','')
         if (isCancel) {
             echo 'cancel build'
         } else {

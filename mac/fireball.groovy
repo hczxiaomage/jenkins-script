@@ -151,8 +151,10 @@ try {
         }
     } catch (FlowInterruptedException interruptEx) {
         echo 'in interruptEx============'
-        isCancel = true;
+        isCancel = true
+        throw interruptEx
     } catch (e) {
+            echo 'bbb----------------'
         if (isCancel) {
             echo 'aaaaaaaaaaaa----------------'
         }

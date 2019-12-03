@@ -1,3 +1,4 @@
+import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 properties([parameters([
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.0-release', description: '构建的分支(对应GitHub上的branch)'),
   string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.0', description: '用户实际看到的版本号'),
@@ -16,6 +17,7 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
 ])])
 
+boolean isCancel = false
 String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
 paramStr += env.FIREBALL_PUBLISH_VERSION;
 
@@ -147,12 +149,12 @@ try {
         stage ('make dist and deploy') {
             execGulp('make-dist-and-deploy');
         }
-    }catch(e){
-        echo 'build fail'+e
-       
-       if(catchInterruptions){
-        echo 'interrupt====='
-       }
+    } catch (FlowInterruptedException interruptEx) {
+        isCancel = true;
+    } catch (e) {
+        if (isCancel) {
+            echo 'aaaaaaaaaaaa----------------'
+        }
     }
    
 }

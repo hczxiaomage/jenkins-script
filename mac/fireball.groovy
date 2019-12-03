@@ -157,9 +157,9 @@ try {
     } catch (FlowInterruptedException interruptEx) {
         isCancel = true
     } finally {
+        echo '构建失败发邮件'
+        sendMail('154179667@qq.com','zhiming.wu@chukong-inc.com','构建结果','构建${env.FIREBALL_BUILD_BRANCH} 失败')
         if (!isCancel) {
-            echo '构建失败发邮件'
-            sendMail('154179667@qq.com','zhiming.wu@chukong-inc.com','构建结果','构建${env.FIREBALL_BUILD_BRANCH} 失败')
         }
     }
    

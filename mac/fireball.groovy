@@ -51,15 +51,15 @@ def execGulp(taskName) {
 
 node('mac') {
 try {
-    stage ('checkout code') {
+        stage ('checkout code') {
             git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'
         }
     
         stage ('setup environment') {
             if (Boolean.parseBoolean(env.FIREBALL_SETUP_ENV)) {
-                sh 'npm install --production'
+                sh 'npm install'
                 sh 'npm install cocos-creator/creator-asar'
-                sh 'npm install rcedit@2.0.0 -g'
+                sh 'npm install appdmg -g'
                 sh 'npm run bootstrap'
             } else {
                 echo 'skip setup-environment stage'
@@ -160,9 +160,9 @@ try {
     } catch (FlowInterruptedException interruptEx) {
         isCancel = true
     } finally {
-        echo '构建失败发邮件'
-        sendMail(env.FIREBALL_MAIL_TO,env.FIREBALL_MAIL_CC,'构建结果','构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败, 时间：' + new Date())
         if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG) && !isCancel) {
+            echo '构建失败发邮件'
+            sendMail(env.FIREBALL_MAIL_TO,env.FIREBALL_MAIL_CC,'构建结果','构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败, 时间：' + new Date())
         }
     }
    

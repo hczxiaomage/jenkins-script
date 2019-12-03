@@ -1,5 +1,5 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
-
+import hudson.FilePath
 def loadMail = load "mail.groovy"
 properties([parameters([
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.0-release', description: '构建的分支(对应GitHub上的branch)'),

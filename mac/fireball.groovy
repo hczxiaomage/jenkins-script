@@ -153,10 +153,9 @@ try {
         echo 'in interruptEx============'
         isCancel = true
         throw interruptEx
-    } catch (e) {
-            echo 'bbb----------------'
+    } finally {
         if (isCancel) {
-            echo 'aaaaaaaaaaaa----------------'
+            echo 'cancel build'
         }
     }
    

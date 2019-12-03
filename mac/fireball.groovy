@@ -17,8 +17,8 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
 ])])
 
-def sendMail(sentTo,cc,title,body){
-    echo 'send to '+sentTo
+def sendMail(sentTo,cc,title,body) {
+    emailext to:sentTo, body:body,subject:title,cc:cc 
 }
 
 boolean isCancel = false
@@ -155,14 +155,11 @@ try {
             execGulp('make-dist-and-deploy');
         }
     } catch (FlowInterruptedException interruptEx) {
-        echo 'in interruptEx============'
         isCancel = true
     } finally {
-        sendMail('154179667@qq.com','','','')
-        if (isCancel) {
-            echo 'cancel build'
-        } else {
-        
+        if (!isCancel) {
+            echo '构建失败发邮件'
+            sendMail('154179667@qq.com','zhiming.wu@chukong-inc.com','构建结果','构建${env.FIREBALL_BUILD_BRANCH} 失败')
         }
     }
    

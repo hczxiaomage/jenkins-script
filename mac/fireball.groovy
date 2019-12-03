@@ -148,8 +148,8 @@ node('mac') {
     }
     
     post {
-        aborted {
-            echo 'abort=========='
+            always {
+                echo 'I will always say Hello again!'
+            }
         }
-    }
 }

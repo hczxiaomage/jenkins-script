@@ -1,4 +1,6 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
+
+def loadMail = load "mail.groovy"
 properties([parameters([
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.0-release', description: '构建的分支(对应GitHub上的branch)'),
   string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.0', description: '用户实际看到的版本号'),
@@ -155,7 +157,6 @@ try {
     } finally {
         def rootDir = pwd()
         echo 'rootDir ====>' + rootDir
-        def loadMail = load "${rootDir}@script/mail.groovy"
         loadMail('154179667@qq.com')
         if (isCancel) {
             echo 'cancel build'

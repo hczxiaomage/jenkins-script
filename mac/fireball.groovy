@@ -152,10 +152,15 @@ try {
     } catch (FlowInterruptedException interruptEx) {
         echo 'in interruptEx============'
         isCancel = true
-        throw interruptEx
     } finally {
+        def rootDir = pwd()
+        echo 'rootDir ====>' + rootDir
+        def loadMail = load "${rootDir}@script/mail.groovy"
+        loadMail('154179667@qq.com')
         if (isCancel) {
             echo 'cancel build'
+        } else {
+        
         }
     }
    

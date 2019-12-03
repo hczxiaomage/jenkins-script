@@ -2,9 +2,12 @@ import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 properties([parameters([
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.0-release', description: '构建的分支(对应GitHub上的branch)'),
   string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.0', description: '用户实际看到的版本号'),
+  string(name: 'FIREBALL_MAIL_TO', defaultValue: 'hao.wang@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
+  string(name: 'FIREBALL_MAIL_CC', defaultValue: 'zhiming.wu@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
+  booleanParam(name: 'FIREBALL_MAIL_SEND', defaultValue: true, description: '构建失败是否发邮件'),
   booleanParam(name: 'FIREBALL_HIDE_VERSION_CODE', defaultValue: false, description: '是否隐藏版本号'),
   booleanParam(name: 'FIREBALL_UPLOAD_WAN', defaultValue: false, description: '是否上传到外网'),
-  booleanParam(name: 'FIREBALL_SKIP_NPM_REBUILD', defaultValue: false, description: '是否跳过 npm install 和 npm rebuild'),
+  booleanParam(name: 'FIREBALL_SKIP_NPM_REBUILD', defaultValue: true, description: '是否跳过 npm install 和 npm rebuild'),
   booleanParam(name: 'FIREBALL_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),
   booleanParam(name: 'FIREBALL_UPDATE_FIREBALL', defaultValue: true, description: 'update fireball'),
   booleanParam(name: 'FIREBALL_UPDATE_BUILTIN', defaultValue: true, description: '是否更新built-in'),
@@ -18,7 +21,7 @@ properties([parameters([
 ])])
 
 def sendMail(sentTo,cc,title,body) {
-    emailext body:body,subject:title,to:sentTo
+    mail body:body,subject:title,to:sentTo,cc:cc
 }
 
 boolean isCancel = false
@@ -158,8 +161,8 @@ try {
         isCancel = true
     } finally {
         echo '构建失败发邮件'
-        sendMail('154179667@qq.com;zhiming.wu@chukong-inc.com','zhiming.wu@chukong-inc.com','构建结果','构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败')
-        if (!isCancel) {
+        sendMail(env.FIREBALL_MAIL_TO,env.FIREBALL_MAIL_CC,'构建结果','构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败, 时间：' + new Date())
+        if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG) && !isCancel) {
         }
     }
    

@@ -148,7 +148,7 @@ try {
             execGulp('make-dist-and-deploy');
         }
     }catch(e){
-        echo 'build fail'
+        echo 'build fail'+e
     }
    
 }

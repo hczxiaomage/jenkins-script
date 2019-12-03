@@ -158,7 +158,7 @@ try {
         isCancel = true
     } finally {
         echo '构建失败发邮件'
-        sendMail('154179667@qq.com','zhiming.wu@chukong-inc.com','构建结果','构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败')
+        sendMail('154179667@qq.com;zhiming.wu@chukong-inc.com','zhiming.wu@chukong-inc.com','构建结果','构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败')
         if (!isCancel) {
         }
     }

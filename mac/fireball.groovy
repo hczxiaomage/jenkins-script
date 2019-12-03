@@ -147,3 +147,9 @@ node('mac') {
         execGulp('make-dist-and-deploy');
     }
 }
+
+post {
+    aborted {
+        echo 'abort=========='
+    }
+}

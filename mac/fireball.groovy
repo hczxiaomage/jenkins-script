@@ -149,6 +149,10 @@ try {
         }
     }catch(e){
         echo 'build fail'+e
+       
+       if(catchInterruptions){
+        echo 'interrupt====='
+       }
     }
    
 }

@@ -146,10 +146,10 @@ node('mac') {
     stage ('make dist and deploy') {
         execGulp('make-dist-and-deploy');
     }
-    
-    post {
-            always {
-                echo 'I will always say Hello again!'
-            }
+}
+
+post {
+        always {
+            echo 'I will always say Hello again!'
         }
 }

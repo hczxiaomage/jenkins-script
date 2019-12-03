@@ -146,10 +146,10 @@ node('mac') {
     stage ('make dist and deploy') {
         execGulp('make-dist-and-deploy');
     }
-}
-
-post {
-    aborted {
-        echo 'abort=========='
+    
+    post {
+        aborted {
+            echo 'abort=========='
+        }
     }
 }

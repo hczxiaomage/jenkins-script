@@ -1,6 +1,4 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
-import hudson.FilePath
-def loadMail = load "mail.groovy"
 properties([parameters([
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.0-release', description: '构建的分支(对应GitHub上的branch)'),
   string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.0', description: '用户实际看到的版本号'),
@@ -19,7 +17,12 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
 ])])
 
+def sendMail(sentTo,cc,title,body){
+    echo 'send to '+sentTo
+}
+
 boolean isCancel = false
+
 String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
 paramStr += env.FIREBALL_PUBLISH_VERSION;
 
@@ -155,9 +158,7 @@ try {
         echo 'in interruptEx============'
         isCancel = true
     } finally {
-        def rootDir = pwd()
-        echo 'rootDir ====>' + rootDir
-        loadMail('154179667@qq.com')
+        sendMail('154179667@qq.com')
         if (isCancel) {
             echo 'cancel build'
         } else {

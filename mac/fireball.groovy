@@ -150,6 +150,7 @@ try {
             execGulp('make-dist-and-deploy');
         }
     } catch (FlowInterruptedException interruptEx) {
+        echo 'in interruptEx============'
         isCancel = true;
     } catch (e) {
         if (isCancel) {

@@ -163,7 +163,11 @@ node('windows') {
     } finally {
         if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG) && !isCancel) {
             echo '构建失败发邮件'
-            sendMail(env.FIREBALL_MAIL_TO,env.FIREBALL_MAIL_CC,'构建结果','构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败, 时间：' + new Date())
+            def platform = 'Windows'
+            if(isUnix()){
+                platform = 'Mac'
+            }
+            sendMail(env.FIREBALL_MAIL_TO,env.FIREBALL_MAIL_CC,'构建' + platform + '失败' ,'构建版本 '+ env.FIREBALL_BUILD_BRANCH +' 失败, 时间：' + new Date())
         }
     }
    

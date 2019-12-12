@@ -1,7 +1,7 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 properties([parameters([
-  string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.0-release', description: '构建的分支(对应GitHub上的branch)'),
-  string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.0', description: '用户实际看到的版本号'),
+  string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.1-release', description: '构建的分支(对应GitHub上的branch)'),
+  string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.1', description: '用户实际看到的版本号'),
   string(name: 'FIREBALL_MAIL_TO', defaultValue: 'hao.wang@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
   string(name: 'FIREBALL_MAIL_CC', defaultValue: 'zhiming.wu@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
   booleanParam(name: 'FIREBALL_MAIL_SEND', defaultValue: true, description: '构建失败是否发邮件'),
@@ -18,6 +18,9 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_UPDATE_EXTERNS', defaultValue: true, description: '是否更新externs'),
   booleanParam(name: 'FIREBALL_UPDATE_TEMPLATES', defaultValue: true, description: '是否更新新建工程的模板'),
   booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
+  booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID', defaultValue: true, description: '是否自动测试 android'),
+  booleanParam(name: 'FIREBALL_AUTO_TEST_WEB', defaultValue: true, description: '是否自动测试 web'),
+  booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID_WEB', defaultValue: true, description: '是否自动测试 android web'),
 ])])
 
 def sendMail(sentTo,cc,title,body) {
@@ -158,6 +161,31 @@ node('windows') {
         stage ('make dist and deploy') {
             execGulp('make-dist-and-deploy');
         }
+
+        stage ('auto test android') {
+            if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_ANDROID)) {
+                build 'AutoTest_Creater_Android/Android'
+            } else {
+                echo 'auto test android'
+            }
+        }
+
+        stage ('auto test web') {
+            if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_WEB)) {
+                build 'AutoTest_Creater_Android_Web/Android_Web'
+            } else {
+                echo 'auto test web'
+            }
+        }
+
+        stage ('auto test android web') {
+            if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_ANDROID_WEB)) {
+                build 'AutoTest_Creater_Android_Web/Android_Web'
+            } else {
+                echo 'auto test android web'
+            }
+        }
+        
     } catch (e) {
          if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG) && !(e instanceof FlowInterruptedException)) {
                echo '构建失败发邮件'

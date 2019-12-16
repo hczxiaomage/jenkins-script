@@ -1,4 +1,4 @@
-properties([parameters([
+def fireball = [
   string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.0-release', description: '构建的分支(对应GitHub上的branch)'),
   string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.0', description: '用户实际看到的版本号'),
   string(name: 'FIREBALL_MAIL_TO', defaultValue: 'hao.wang@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
@@ -17,4 +17,4 @@ properties([parameters([
   booleanParam(name: 'FIREBALL_UPDATE_EXTERNS', defaultValue: true, description: '是否更新externs'),
   booleanParam(name: 'FIREBALL_UPDATE_TEMPLATES', defaultValue: true, description: '是否更新新建工程的模板'),
   booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
-])])
+]

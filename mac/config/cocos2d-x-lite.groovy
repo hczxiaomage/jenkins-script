@@ -1,4 +1,4 @@
-def getParams(){
+def getParams() {
     return [
     string(name: 'COCOS2DX_BUILD_BRANCH', defaultValue: 'v2.2.1-release', description: '构建的分支(对应GitHub上的branch)'),
     booleanParam(name: 'FIREBALL_SETUP_ENV', defaultValue: false, description: '是否初始化环境'),

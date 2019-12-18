@@ -19,22 +19,24 @@ node('mac') {
 try {
         stage('update jenkins script') {
             git branch: 'creator', url: 'git@github.com:wuzhiming/jenkins-script.git'
-        }
-        //load script and init some config
-        load '../jenkins-script/config/fireball.groovy'
-        boolean isCancel = false
+            //load script and init some config
+            def conf = load '../jenkins-script/config/fireball.groovy'
+            properties([parameters(conf.getParams())])
 
-        String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
-        paramStr += env.FIREBALL_PUBLISH_VERSION;
+            boolean isCancel = false
 
-        if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
-            paramStr += ' --fw'
-        }
-        if (Boolean.parseBoolean(env.FIREBALL_SKIP_NPM_REBUILD)) {
-            paramStr += ' --sn'
-        }
+            String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
+            paramStr += env.FIREBALL_PUBLISH_VERSION;
 
-        env.PARAM_STRING = paramStr;
+            if (Boolean.parseBoolean(env.FIREBALL_UPLOAD_WAN)) {
+                paramStr += ' --fw'
+            }
+            if (Boolean.parseBoolean(env.FIREBALL_SKIP_NPM_REBUILD)) {
+                paramStr += ' --sn'
+            }
+
+            env.PARAM_STRING = paramStr;
+        }
 
         stage ('checkout code') {
             git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'

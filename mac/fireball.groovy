@@ -18,9 +18,9 @@ def execGulp(taskName) {
 node('mac') {
 try {
         stage('update jenkins script') {
-            git branch: 'creator', url: 'git@github.com:wuzhiming/jenkins-script.git'
             //load script and init some config
-            def conf = load '../jenkins-script/config/fireball.groovy'
+            //加载同一份打包脚本，在 Creator_2D 目录下
+            def conf = load '../../../jenkins-script/mac/config/fireball.groovy'
             properties([parameters(conf.getParams())])
 
             boolean isCancel = false

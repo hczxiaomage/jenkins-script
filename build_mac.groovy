@@ -2,8 +2,8 @@ node('mac') {
     stage('update jenkins script') {
         git branch: 'creator', url: 'git@github.com:wuzhiming/jenkins-script.git'
         //load script and init some config
-        def fireball = load '../jenkins-script/config/fireball.groovy'
-        def lite = load '../jenkins-script/config/cocos2d-x-lite.groovy'
+        def fireball = load './mac/config/fireball.groovy'
+        def lite = load './mac/config/cocos2d-x-lite.groovy'
         def list = new ArrayList()
         list.addAll(fireball.getParams())
         list.addAll(lite.getParams())

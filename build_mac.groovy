@@ -13,7 +13,7 @@ node('mac') {
         list.addAll(setp)
         list.addAll(fireball.getParams())
         list.addAll(lite.getParams())
-        echo 'list length'+list.size
+        echo 'list length'+list.size()
         properties([parameters(list)])
     }
 

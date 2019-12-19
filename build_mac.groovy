@@ -1,10 +1,15 @@
 node('mac') {
     stage('update jenkins script') {
-        git branch: 'creator', url: 'git@github.com:wuzhiming/jenkins-script.git'
+        build job: 'Creator_2D/jenkins-script'
+        def step = [
+            booleanParam(name: 'BUILD_LITE', defaultValue: true, description: '是否构建 cocos2d-x-lite')
+            booleanParam(name: 'BUILD_FIREBALL', defaultValue: true, description: '是否构建fireball'),
+        ]
         //load script and init some config
-        def fireball = load './mac/config/fireball.groovy'
-        def lite = load './mac/config/cocos2d-x-lite.groovy'
+        def fireball = load '../jenkins-script/mac/config/fireball.groovy'
+        def lite = load '../jenkins-script/mac/config/cocos2d-x-lite.groovy'
         def list = new ArrayList()
+        list.addAll(setp)
         list.addAll(fireball.getParams())
         list.addAll(lite.getParams())
 

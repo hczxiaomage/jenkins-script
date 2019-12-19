@@ -2,15 +2,13 @@
 node('mac') {
     stage('update jenkins script') {
         build job: 'Creator_2D/jenkins-script'
-        def step = [
+        def list = [
             booleanParam(name: 'BUILD_LITE', defaultValue: true, description: '是否构建 cocos2d-x-lite'),
             booleanParam(name: 'BUILD_FIREBALL', defaultValue: true, description: '是否构建 fireball'),
         ]
         //load script and init some config
         def fireball = load '../jenkins-script/mac/config/fireball.groovy'
         def lite = load '../jenkins-script/mac/config/cocos2d-x-lite.groovy'
-        def list = new ArrayList()
-        // list.addAll(setp)
         list.addAll(fireball.getParams())
         list.addAll(lite.getParams())
         echo 'list length'+list.size()

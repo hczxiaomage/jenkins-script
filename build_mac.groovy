@@ -10,7 +10,7 @@ node('mac') {
         def fireball = load '../jenkins-script/mac/config/fireball.groovy'
         def lite = load '../jenkins-script/mac/config/cocos2d-x-lite.groovy'
         def list = new ArrayList()
-        list.addAll(setp)
+        // list.addAll(setp)
         list.addAll(fireball.getParams())
         list.addAll(lite.getParams())
         echo 'list length'+list.size()

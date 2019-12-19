@@ -3,7 +3,7 @@ node('mac') {
     stage('update jenkins script') {
         build job: 'Creator_2D/jenkins-script'
         def step = [
-            booleanParam(name: 'BUILD_LITE', defaultValue: true, description: '是否构建 cocos2d-x-lite')
+            booleanParam(name: 'BUILD_LITE', defaultValue: true, description: '是否构建 cocos2d-x-lite'),
             booleanParam(name: 'BUILD_FIREBALL', defaultValue: true, description: '是否构建 fireball'),
         ]
         //load script and init some config

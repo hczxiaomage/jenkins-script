@@ -1,8 +1,8 @@
 
 def getParams() {
     return [
-        string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.1-release', description: '构建的分支(对应GitHub上的branch)'),
-        string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.1', description: '用户实际看到的版本号'),
+        string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.2.2-release', description: '构建的分支(对应GitHub上的branch)'),
+        string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.2.2', description: '用户实际看到的版本号'),
         string(name: 'FIREBALL_MAIL_TO', defaultValue: 'hao.wang@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
         string(name: 'FIREBALL_MAIL_CC', defaultValue: 'zhiming.wu@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
         booleanParam(name: 'FIREBALL_MAIL_SEND', defaultValue: true, description: '构建失败是否发邮件'),

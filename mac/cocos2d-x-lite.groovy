@@ -1,7 +1,7 @@
 node('mac') {
     stage('update jenkins script') {
         //load script and init some config
-        def conf = load '../../../jenkins-script/mac/config/cocos2d-x-lite.groovy'
+        def conf = load '../../../jenkins-script/config/cocos2d-x-lite.groovy'
         properties([parameters(conf.getParams())])
     }
     stage ('checkout code'){

@@ -1,5 +1,5 @@
 //用来构建 -lite 和 fireball 两个 task 的脚本
-node('mac') {
+node('windows') {
     stage('update jenkins script') {
         build job: 'Creator_2D/jenkins-script'
         def list = [
@@ -16,10 +16,10 @@ node('mac') {
     }
 
     stage ('build cocos2d-x-lite') {
-        build job: 'Creator_2D/cocos2d-x-lite/mac/cocos2d-x-lite'
+        build job: 'Creator_2D/cocos2d-x-lite/windows/cocos2d-x-lite'
     }
 
     stage ('build fireball') {
-        build job: 'Creator_2D/fireball/mac/fireball'
+        build job: 'Creator_2D/fireball/windows/fireball'
     }
 }

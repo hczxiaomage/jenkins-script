@@ -1,6 +1,6 @@
 //用来构建 -lite 和 fireball 两个 task 的脚本
 node('windows') {
-    def utils = load '../jenkins-script/utils/utils.groovy'
+    def utils = load '../../../jenkins-script/utils/utils.groovy'
     def list = [
             booleanParam(name: 'BUILD_LITE', defaultValue: true, description: '是否构建 cocos2d-x-lite'),
             booleanParam(name: 'BUILD_FIREBALL', defaultValue: true, description: '是否构建 fireball'),

@@ -9,8 +9,6 @@ node('windows') {
             def conf = load '../../../jenkins-script/config/fireball.groovy'
             properties([parameters(conf.getParams())])
 
-            boolean isCancel = false
-
             String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
             paramStr += env.FIREBALL_PUBLISH_VERSION;
 

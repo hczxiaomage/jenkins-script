@@ -1,5 +1,6 @@
 node('windows') {
     stage('update jenkins script') {
+        echo 'checkout branch000 ---' + params.get('COCOS2DX_BUILD_BRANCH')
         //load script and init some config
         def conf = load '../../../jenkins-script/config/cocos2d-x-lite.groovy'
         properties([parameters(conf.getParams())])

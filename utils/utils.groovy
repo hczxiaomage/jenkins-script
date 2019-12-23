@@ -12,4 +12,13 @@ def execGulp(taskName) {
         bat command;
     }
 }
+
+def genParams(lists){
+    def ls = []
+    for(item in lists){
+        def key = item.toMap().get('name');
+        ls.add(string(name:key,value:params[key]))
+    }
+    return ls
+}
 return this

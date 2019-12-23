@@ -5,6 +5,7 @@ node('windows') {
         properties([parameters(conf.getParams())])
     }
     stage ('checkout code'){
+        echo 'checkout branch111 ---' + params.get('COCOS2DX_BUILD_BRANCH')
         echo 'checkout branch ---' + env.COCOS2DX_BUILD_BRANCH
         git branch: "${COCOS2DX_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/cocos2d-x-lite.git'
     }

@@ -7,5 +7,5 @@ if(Boolean.parseBoolean(env.IS_WINDOWS)) {
     nodeName = 'windows'
 }
 node (nodeName) {
-    git branch: 'creator', url: 'git@github.com:wuzhiming/jenkins-script.git'
+    git branch: 'creator', url: 'git@github.com:cocos-creator/jenkins-script.git'
 }

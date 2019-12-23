@@ -23,6 +23,7 @@ node('windows') {
         }
 
         stage ('checkout code') {
+            echo 'checkout branch ---' + env.FIREBALL_BUILD_BRANCH
             git branch: "${FIREBALL_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/fireball.git'
         }
     

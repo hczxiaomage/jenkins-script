@@ -132,7 +132,7 @@ node('windows') {
 
         stage ('auto test android') {
             if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_ANDROID)) {
-                build 'AutoTest_Creater_Android/Android'
+                build 'AutoTest_Creater_Android/Android', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
             } else {
                 echo 'auto test android'
             }
@@ -140,7 +140,7 @@ node('windows') {
 
         stage ('auto test web') {
             if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_WEB)) {
-                build 'AutoTest_Creater_Android_Web/Android_Web'
+                build 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
             } else {
                 echo 'auto test web'
             }
@@ -148,7 +148,7 @@ node('windows') {
 
         stage ('auto test android web') {
             if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_ANDROID_WEB)) {
-                build 'AutoTest_Creater_Android_Web/Android_Web'
+                build 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
             } else {
                 echo 'auto test android web'
             }

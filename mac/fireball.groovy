@@ -1,9 +1,9 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 
 node('mac') {
+    def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
         boolean isCancel = false
-        def utils = load '../../../jenkins-script/utils/utils.groovy'
         stage('update jenkins script') {
             //load script and init some config
             //加载同一份打包脚本，在 Creator_2D 目录下

@@ -1,8 +1,8 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 node('windows') {
+    def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
         boolean isCancel = false
-        def utils = load '../../../jenkins-script/utils/utils.groovy'
         stage('update jenkins script') {
             bat ' chcp 65001'
             //load script and init some config

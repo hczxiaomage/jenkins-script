@@ -1,12 +1,11 @@
 node('windows') {
     stage('update jenkins script') {
-        echo 'checkout branch000 ---' + params.get('COCOS2DX_BUILD_BRANCH')
+        bat ' chcp 65001'
         //load script and init some config
         def conf = load '../../../jenkins-script/config/cocos2d-x-lite.groovy'
         properties([parameters(conf.getParams())])
     }
     stage ('checkout code'){
-        echo 'checkout branch111 ---' + params.get('COCOS2DX_BUILD_BRANCH')
         echo 'checkout branch ---' + env.COCOS2DX_BUILD_BRANCH
         git branch: "${COCOS2DX_BUILD_BRANCH}", url: 'git@github.com:cocos-creator/cocos2d-x-lite.git'
     }

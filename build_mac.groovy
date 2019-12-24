@@ -13,7 +13,6 @@ node('mac') {
         def lite = load '../jenkins-script/config/cocos2d-x-lite.groovy'
         list.addAll(fireball.getParams())
         list.addAll(lite.getParams())
-        echo 'list length' + list.size()
         properties([parameters(list)])
     }
 
@@ -26,7 +25,7 @@ node('mac') {
     }
 
     stage ('build fireball') {
-        if (Boolean.parseBoolean(env.BUILD_LITE)) {
+        if (Boolean.parseBoolean(env.BUILD_FIREBALL)) {
             build job: 'Creator_2D/fireball/mac/fireball', parameters:utils.genParams(list)
         } else {
             echo 'skip build fireball'

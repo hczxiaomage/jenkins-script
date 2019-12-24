@@ -4,6 +4,7 @@ node('windows') {
         boolean isCancel = false
         def utils = load '../../../jenkins-script/utils/utils.groovy'
         stage('update jenkins script') {
+            bat ' chcp 65001'
             //load script and init some config
             //加载同一份打包脚本，在 Creator_2D 目录下
             def conf = load '../../../jenkins-script/config/fireball.groovy'

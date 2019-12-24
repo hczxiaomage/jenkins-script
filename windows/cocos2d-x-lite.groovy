@@ -1,6 +1,5 @@
 node('windows') {
     stage('update jenkins script') {
-        bat ' chcp 65001'
         //load script and init some config
         def conf = load '../../../jenkins-script/config/cocos2d-x-lite.groovy'
         properties([parameters(conf.getParams())])

@@ -6,7 +6,6 @@ node('windows') {
             booleanParam(name: 'BUILD_FIREBALL', defaultValue: true, description: '是否构建 fireball'),
         ]
     stage('update jenkins script') {
-        bat ' chcp 65001'
         build job: 'Creator_2D/jenkins-script', parameters: [booleanParam(name: 'IS_WINDOWS', value: true)]
         //load script and init some config
         def fireball = load '../jenkins-script/config/fireball.groovy'

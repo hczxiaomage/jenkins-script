@@ -17,7 +17,12 @@ def genParams(lists){
     def ls = []
     for(item in lists){
         def key = item.toMap().get('name');
-        ls.add(string(name:key,value:params[key]))
+        def value = params[key]
+        if(value instanceof Boolean){
+            ls.add(booleanParam(name:key,value:value))
+        }else {
+            ls.add(string(name:key,value:value))
+        }
     }
     return ls
 }

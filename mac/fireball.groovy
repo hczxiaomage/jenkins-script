@@ -131,6 +131,7 @@ node('mac') {
             utils.execGulp('make-dist-and-deploy');
         }
     } catch (e) {
+        e.printStackTrace()
         if (Boolean.parseBoolean(env.FIREBALL_PUSH_TAG) && !(e instanceof FlowInterruptedException)) {
                   echo '构建失败发邮件'
                   def platform = 'Windows'

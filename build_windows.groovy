@@ -19,7 +19,7 @@ node('windows') {
 
     stage ('build cocos2d-x-lite') {
         if (Boolean.parseBoolean(env.BUILD_LITE)) {
-            build job: 'Creator_2D/cocos2d-x-lite/windows/cocos2d-x-lite', parameters:utils.getParams(list)
+            build job: 'Creator_2D/cocos2d-x-lite/windows/cocos2d-x-lite', parameters:utils.genParams(list)
         } else {
             echo 'skip build cocos2d-x-lite'
         }
@@ -27,7 +27,7 @@ node('windows') {
 
     stage ('build fireball') {
         if (Boolean.parseBoolean(env.BUILD_LITE)) {
-            build job: 'Creator_2D/fireball/windows/fireball', parameters:utils.getParams(list)
+            build job: 'Creator_2D/fireball/windows/fireball', parameters:utils.genParams(list)
         } else {
             echo 'skip build fireball'
         }

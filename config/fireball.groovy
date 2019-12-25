@@ -19,9 +19,9 @@ def getParams() {
         booleanParam(name: 'FIREBALL_UPDATE_EXTERNS', defaultValue: true, description: '是否更新externs'),
         booleanParam(name: 'FIREBALL_UPDATE_TEMPLATES', defaultValue: true, description: '是否更新新建工程的模板'),
         booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag'),
-        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID', defaultValue: false, description: '是否自动测试 android'),
-        booleanParam(name: 'FIREBALL_AUTO_TEST_WEB', defaultValue: false, description: '是否自动测试 web'),
-        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID_WEB', defaultValue: false, description: '是否自动测试 android web'),
+        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID', defaultValue: true, description: '是否自动测试 android'),
+        booleanParam(name: 'FIREBALL_AUTO_TEST_WEB', defaultValue: true, description: '是否自动测试 web'),
+        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID_WEB', defaultValue: true, description: '是否自动测试 android web'),
     ]
 }
 return this

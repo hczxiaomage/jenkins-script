@@ -4,6 +4,7 @@ node('windows') {
     def list = [
             booleanParam(name: 'BUILD_LITE', defaultValue: true, description: '是否构建 cocos2d-x-lite'),
             booleanParam(name: 'BUILD_FIREBALL', defaultValue: true, description: '是否构建 fireball'),
+            booleanParam(name: 'AUTO_TEST', defaultValue: true, description: '是否构建执行自动化测试'),
         ]
     stage('update jenkins script') {
         build job: 'Creator_2D/jenkins-script', parameters: [booleanParam(name: 'IS_WINDOWS', value: true)]

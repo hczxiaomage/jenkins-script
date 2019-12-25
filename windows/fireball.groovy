@@ -1,10 +1,11 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 node('windows') {
-    println 'build fireball-=------' + params.AUTO_TEST
+    println 'auto test-=------' + params.AUTO_TEST
+    println 'build fireball-=------' + params.BUILD_FIREBALL
     def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
         boolean isCancel = false
-        if(Boolean.parseBoolean(env.BUILD_FIREBALL)) {
+        if(params.BUILD_FIREBALL) {
             stage('update jenkins script') {
                 //load script and init some config
                 //加载同一份打包脚本，在 Creator_2D 目录下
@@ -133,7 +134,7 @@ node('windows') {
             }
         }
         
-        if(Boolean.parseBoolean(env.AUTO_TEST))  {
+        if(params.AUTO_TEST)  {
             stage ('auto test android') {
                 if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_ANDROID)) {
                     build 'AutoTest_Creater_Android/Android', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]

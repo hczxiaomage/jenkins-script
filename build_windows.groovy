@@ -25,10 +25,6 @@ node('windows') {
     }
 
     stage ('build fireball') {
-        if (Boolean.parseBoolean(env.BUILD_FIREBALL)) {
-            build job: 'Creator_2D/fireball/windows/fireball', parameters:utils.genParams(list)
-        } else {
-            echo 'skip build fireball'
-        }
+        build job: 'Creator_2D/fireball/windows/fireball', parameters:utils.genParams(list)
     }
 }

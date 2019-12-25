@@ -1,5 +1,6 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 node('windows') {
+    echo 'build fireball-=------' + env.AUTO_TEST
     def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
         boolean isCancel = false

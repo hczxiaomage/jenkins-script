@@ -1,7 +1,5 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 node('windows') {
-    println 'auto test-=------' + params.AUTO_TEST
-    println 'build fireball-=------' + params.BUILD_FIREBALL
     def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
         boolean isCancel = false
@@ -136,7 +134,7 @@ node('windows') {
         
         if(params.AUTO_TEST)  {
             stage ('auto test android') {
-                if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_ANDROID)) {
+                if (params.FIREBALL_AUTO_TEST_ANDROID) {
                     build 'AutoTest_Creater_Android/Android', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
                 } else {
                     echo 'auto test android'
@@ -144,7 +142,7 @@ node('windows') {
             }
 
             stage ('auto test web') {
-                if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_WEB)) {
+                if (params.FIREBALL_AUTO_TEST_WEB) {
                     build 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
                 } else {
                     echo 'auto test web'
@@ -152,7 +150,7 @@ node('windows') {
             }
 
             stage ('auto test android web') {
-                if (Boolean.parseBoolean(env.FIREBALL_AUTO_TEST_ANDROID_WEB)) {
+                if (params.FIREBALL_AUTO_TEST_ANDROID_WEB) {
                     build 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
                 } else {
                     echo 'auto test android web'

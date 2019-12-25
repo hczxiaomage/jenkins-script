@@ -135,7 +135,7 @@ node('windows') {
         if(params.AUTO_TEST)  {
             stage ('auto test android') {
                 if (params.FIREBALL_AUTO_TEST_ANDROID) {
-                    build job 'AutoTest_Creater_Android/Android', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
+                    build job: 'AutoTest_Creater_Android/Android', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
                 } else {
                     echo 'auto test android'
                 }
@@ -143,7 +143,7 @@ node('windows') {
 
             stage ('auto test web') {
                 if (params.FIREBALL_AUTO_TEST_WEB) {
-                    build job 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
+                    build job: 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
                 } else {
                     echo 'auto test web'
                 }
@@ -151,7 +151,7 @@ node('windows') {
 
             stage ('auto test android web') {
                 if (params.FIREBALL_AUTO_TEST_ANDROID_WEB) {
-                    build job 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
+                    build job: 'AutoTest_Creater_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
                 } else {
                     echo 'auto test android web'
                 }

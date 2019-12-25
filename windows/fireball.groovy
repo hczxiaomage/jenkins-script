@@ -143,6 +143,7 @@ node('windows') {
 
             stage ('auto test web') {
                 if (params.FIREBALL_AUTO_TEST_WEB) {
+                    echo 'CocosCreator_Path' + pwd()+'\\'+'dist'
                     build job: 'AutoTest_Creator_Android_Web/Android_Web', parameters:[string(name: 'CocosCreator_Path',value: pwd()+'\\'+'dist')]
                 } else {
                     echo 'auto test web'

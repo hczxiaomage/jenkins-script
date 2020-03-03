@@ -38,8 +38,8 @@ def getParams() {
     if(isUnix()){
         originList.addAll(macList)
     } else {
-        originList.addAll(windowList);
+        originList.addAll(windowList)
     }
-    return
+    return originList
 }
 return this

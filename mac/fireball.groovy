@@ -1,13 +1,12 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 
 node('mac') {
+    def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
-        def utils = load '../../../jenkins-script/utils/utils.groovy'
         boolean isCancel = false
         stage('update jenkins script') {
             //load script and init some config
             //加载同一份打包脚本，在 Creator_2D 目录下
-
             def conf = load '../../../jenkins-script/config/fireball.groovy'
             properties([parameters(conf.getParams())])
 

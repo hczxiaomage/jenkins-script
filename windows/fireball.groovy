@@ -1,5 +1,6 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 node('windows') {
+    def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
         boolean isCancel = false
         if(params.BUILD_FIREBALL) {
@@ -7,7 +8,6 @@ node('windows') {
                 //load script and init some config
                 //加载同一份打包脚本，在 Creator_2D 目录下
                 def conf = load '../../../jenkins-script/config/fireball.groovy'
-
                 properties([parameters(conf.getParams())])
 
                 String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';

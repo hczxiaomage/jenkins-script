@@ -1,21 +1,15 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 
 node('mac') {
-    def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
+        def utils = load '../../../jenkins-script/utils/utils.groovy'
         boolean isCancel = false
         stage('update jenkins script') {
             //load script and init some config
             //加载同一份打包脚本，在 Creator_2D 目录下
-            def conf = load '../../../jenkins-script/config/fireball.groovy'
-            def list = [
-                    booleanParam(name: 'FIREBALL_AUTO_TEST_IOS', defaultValue: true, description: '是否自动测试 iOS'),
-                    booleanParam(name: 'FIREBALL_AUTO_TEST_IOS_WEIXIN', defaultValue: true, description: '是否自动测试iOS微信'),
-            ]
-            def originList = utils.getParams();
-            originList.addAll(list);
 
-            properties([parameters(originList)])
+            def conf = load '../../../jenkins-script/config/fireball.groovy'
+            properties([parameters(conf.getParams())])
 
             String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
             paramStr += env.FIREBALL_PUBLISH_VERSION;

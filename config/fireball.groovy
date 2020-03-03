@@ -1,6 +1,7 @@
 
 def getParams() {
-    return [
+    //共用的项目
+    def originList = [
         string(name: 'FIREBALL_BUILD_BRANCH', defaultValue: 'v2.3.0', description: '构建的分支(对应GitHub上的branch)'),
         string(name: 'FIREBALL_PUBLISH_VERSION', defaultValue: '2.3.0', description: '用户实际看到的版本号'),
         string(name: 'FIREBALL_MAIL_TO', defaultValue: 'hao.wang@chukong-inc.com', description: '构建失败默认发送到谁的邮箱，多人用;隔开'),
@@ -20,5 +21,25 @@ def getParams() {
         booleanParam(name: 'FIREBALL_UPDATE_TEMPLATES', defaultValue: true, description: '是否更新新建工程的模板'),
         booleanParam(name: 'FIREBALL_PUSH_TAG', defaultValue: true, description: '是否添加tag')
     ]
+
+    //windows专属
+    def windowList = [
+        booleanParam(name: 'FIREBALL_AUTO_TEST_WEB', defaultValue: true, description: '是否自动测试 web'),
+        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID_WEB', defaultValue: true, description: '是否自动测试 android web'),
+        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID', defaultValue: true, description: '是否自动测试 android')
+    ]
+
+    //Mac专属
+    def macList = [
+        booleanParam(name: 'FIREBALL_AUTO_TEST_IOS', defaultValue: true, description: '是否自动测试 iOS'),
+        booleanParam(name: 'FIREBALL_AUTO_TEST_IOS_WEIXIN', defaultValue: true, description: '是否自动测试iOS微信'),
+    ]
+
+    if(isUnix()){
+        originList.addAll(macList)
+    } else {
+        originList.addAll(windowList);
+    }
+    return
 }
 return this

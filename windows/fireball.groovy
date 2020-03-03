@@ -8,15 +8,7 @@ node('windows') {
                 //加载同一份打包脚本，在 Creator_2D 目录下
                 def conf = load '../../../jenkins-script/config/fireball.groovy'
 
-                def list = [
-                        booleanParam(name: 'FIREBALL_AUTO_TEST_WEB', defaultValue: true, description: '是否自动测试 web'),
-                        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID_WEB', defaultValue: true, description: '是否自动测试 android web'),
-                        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID', defaultValue: true, description: '是否自动测试 android')
-                ]
-                def originList = utils.getParams();
-                originList.addAll(list);
-
-                properties([parameters(originList)])
+                properties([parameters(conf.getParams())])
 
                 String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
                 paramStr += env.FIREBALL_PUBLISH_VERSION;

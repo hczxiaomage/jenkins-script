@@ -1,6 +1,5 @@
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 node('windows') {
-    def utils = load '../../../jenkins-script/utils/utils.groovy'
     try {
         boolean isCancel = false
         if(params.BUILD_FIREBALL) {
@@ -8,7 +7,16 @@ node('windows') {
                 //load script and init some config
                 //加载同一份打包脚本，在 Creator_2D 目录下
                 def conf = load '../../../jenkins-script/config/fireball.groovy'
-                properties([parameters(conf.getParams())])
+
+                def list = [
+                        booleanParam(name: 'FIREBALL_AUTO_TEST_WEB', defaultValue: true, description: '是否自动测试 web'),
+                        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID_WEB', defaultValue: true, description: '是否自动测试 android web'),
+                        booleanParam(name: 'FIREBALL_AUTO_TEST_ANDROID', defaultValue: true, description: '是否自动测试 android')
+                ]
+                def originList = utils.getParams();
+                originList.addAll(list);
+
+                properties([parameters(originList)])
 
                 String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
                 paramStr += env.FIREBALL_PUBLISH_VERSION;

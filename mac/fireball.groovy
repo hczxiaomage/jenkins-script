@@ -8,7 +8,14 @@ node('mac') {
             //load script and init some config
             //加载同一份打包脚本，在 Creator_2D 目录下
             def conf = load '../../../jenkins-script/config/fireball.groovy'
-            properties([parameters(conf.getParams())])
+            def list = [
+                    booleanParam(name: 'FIREBALL_AUTO_TEST_IOS', defaultValue: true, description: '是否自动测试 iOS'),
+                    booleanParam(name: 'FIREBALL_AUTO_TEST_IOS_WEIXIN', defaultValue: true, description: '是否自动测试iOS微信'),
+            ]
+            def originList = utils.getParams();
+            originList.addAll(list);
+
+            properties([parameters(originList)])
 
             String paramStr = Boolean.parseBoolean(env.FIREBALL_HIDE_VERSION_CODE)? ' -B ':' -b ';
             paramStr += env.FIREBALL_PUBLISH_VERSION;
@@ -129,6 +136,25 @@ node('mac') {
     
         stage ('make dist and deploy') {
             utils.execGulp('make-dist-and-deploy');
+        }
+
+        if(params.AUTO_TEST)  {
+            stage ('auto test iOS') {
+                if (params.FIREBALL_AUTO_TEST_IOS) {
+                    println 'CocosCreator_Path' + pwd()+'\\'+'dist'
+                    build job: 'AutoTest_Creator_iOS/iOS', parameters:[string(name: 'CocosCreator_Path',value: pwd() + 'dist/CocosCreator.app/Contents/MacOS/CocosCreator')]
+                } else {
+                    echo 'auto test android'
+                }
+            }
+
+            stage ('auto test wechat') {
+                if (params.FIREBALL_AUTO_TEST_WEIXIN) {
+                    build job: 'AutoTest_Creator_iOS_weixin/weixin_MiniProgram/', parameters:[string(name: 'CocosCreator_Path',value: pwd() + 'dist/CocosCreator.app/Contents/MacOS/CocosCreator')]
+                } else {
+                    echo 'auto test web'
+                }
+            }
         }
     } catch (e) {
         e.printStackTrace()
